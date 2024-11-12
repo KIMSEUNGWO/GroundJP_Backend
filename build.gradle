@@ -52,7 +52,7 @@ allprojects {
 		implementation 'io.jsonwebtoken:jjwt-gson:0.12.6'
 		implementation 'io.jsonwebtoken:jjwt-impl:0.12.6'
 
-		implementation 'io.github.kimseungwo:wordinspector:0.0.10'
+//		implementation 'io.github.kimseungwo:wordinspector:0.0.10'
 
 	}
 
@@ -65,30 +65,36 @@ allprojects {
 	}
 }
 
-dependencies {
-	implementation project(":common")
-	implementation project(":admin")
+
+// 사용자 서버 모듈 (새로 추가)
+project(":user") {
+	bootJar { enabled = true }
+	jar { enabled = false }
+
+	dependencies {
+		implementation project(":common")
+	}
 }
 
 project(":admin") {
+	bootJar { enabled = true }
+	jar { enabled = false }
+
 	dependencies {
 		implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 		implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
 		implementation project(":common")
 	}
-	bootJar {
-		enabled = false
-	}
 }
 
 project(":common") {
+	bootJar { enabled = false }
+	jar { enabled = true }
+
 	dependencies {
 		// 썸네일
 		implementation 'net.coobird:thumbnailator:0.4.20'
-	}
-	bootJar {
-		enabled = false
 	}
 }
 
