@@ -8,9 +8,6 @@ import com.flutter.alloffootball.admin.dto.notice.ResponseNoticeListView;
 import com.flutter.alloffootball.admin.dto.user.RequestSearchUser;
 import com.flutter.alloffootball.admin.dto.user.ResponseSearchUser;
 import com.flutter.alloffootball.admin.dto.user.ResponseUserOrder;
-import com.flutter.alloffootball.common.domain.admin.Notice;
-import com.flutter.alloffootball.common.domain.admin.QNotice;
-import com.flutter.alloffootball.common.domain.field.Field;
 import com.flutter.alloffootball.common.domain.match.Match;
 import com.flutter.alloffootball.common.enums.MatchStatus;
 import com.flutter.alloffootball.common.enums.OrderStatus;
@@ -21,27 +18,22 @@ import com.flutter.alloffootball.common.jparepository.JpaUserRepository;
 import com.flutter.alloffootball.common.querydsl.QueryFieldSupport;
 import com.flutter.alloffootball.common.querydsl.QueryMatchSupport;
 import com.flutter.alloffootball.common.querydsl.QueryNoticeSupport;
-import com.flutter.alloffootball.common.querydsl.suport.QueryDSLRepositorySupport;
 import com.querydsl.core.types.dsl.*;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.List;
 
-import static com.flutter.alloffootball.common.domain.admin.QNotice.*;
 import static com.flutter.alloffootball.common.domain.field.QField.field;
 import static com.flutter.alloffootball.common.domain.match.QMatch.match;
 
 @Repository
 @RequiredArgsConstructor
-public class AdminPageRepository {
+public class PageRepository {
 
     private final JPAQueryFactory query;
     private final JpaOrderRepository jpaOrderRepository;
@@ -52,7 +44,7 @@ public class AdminPageRepository {
     private final QueryNoticeSupport noticeSupport;
 
 
-    public Page<Field> findAllBySearchField(RequestSearchField data, Pageable pageable) {
+    public Page<ResponseSearchField> findAllBySearchField(RequestSearchField data, Pageable pageable) {
         BooleanExpression compareRegion = conditionRegion(data.getRegion());
         BooleanExpression keywordExpression = getKeywordExpression(data.getWord(), field.title);
 
@@ -60,7 +52,7 @@ public class AdminPageRepository {
             query -> query.selectFrom(field)
                 .where(keywordExpression, compareRegion)
                 .orderBy(field.id.desc())
-        );
+        ).map(ResponseSearchField::new);
 
     }
 
@@ -130,7 +122,7 @@ public class AdminPageRepository {
         return match.matchStatus.eq(matchStatus);
     }
 
-    public Page<Notice> findAllBySearchNotice(Pageable pageable) {
-        return noticeSupport.findAllBySearchNotice(pageable);
+    public Page<ResponseNoticeListView> findAllBySearchNotice(Pageable pageable) {
+        return noticeSupport.findAllBySearchNotice(pageable).map(ResponseNoticeListView::new);
     }
 }

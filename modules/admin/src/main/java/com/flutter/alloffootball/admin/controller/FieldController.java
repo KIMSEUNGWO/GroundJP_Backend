@@ -1,8 +1,7 @@
 package com.flutter.alloffootball.admin.controller;
 
 import com.flutter.alloffootball.admin.dto.field.*;
-import com.flutter.alloffootball.admin.dto.match.RequestSaveMatchForm;
-import com.flutter.alloffootball.admin.service.AdminService;
+import com.flutter.alloffootball.admin.service.FieldService;
 import com.flutter.alloffootball.common.enums.region.Region;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -17,9 +16,9 @@ import java.util.Locale;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/admin/field")
-public class AdminFieldController {
+public class FieldController {
 
-    private final AdminService adminService;
+    private final FieldService fieldService;
 
     @GetMapping
     public String field(Model model, Locale locale) {
@@ -32,7 +31,7 @@ public class AdminFieldController {
      */
     @GetMapping("/{fieldId}")
     public String fieldViewPage(@PathVariable("fieldId") long fieldId, Model model) {
-        ResponseViewField viewField = adminService.findByIdViewField(fieldId);
+        ResponseViewField viewField = fieldService.findByIdViewField(fieldId);
         model.addAttribute("field", viewField);
         return "admin_field_view";
     }
@@ -42,12 +41,31 @@ public class AdminFieldController {
      */
     @GetMapping("/{fieldId}/edit")
     public String fieldEdit(@PathVariable("fieldId") Long fieldId, Model model) {
-        ResponseEditField form = adminService.getEditFieldForm(fieldId);
+        ResponseEditField form = fieldService.getEditFieldForm(fieldId);
 
         model.addAttribute("options", new FieldOption());
         model.addAttribute("fieldId", fieldId);
         model.addAttribute("editField", form);
         return "admin_field_edit";
+    }
+
+    /**
+     * PATCH 구장 수정
+     */
+    @PatchMapping("/{fieldId}")
+    public String fieldPatch(@PathVariable("fieldId") Long fieldId,
+                             RedirectAttributes redirectAttributes,
+                             @ModelAttribute("editField") ResponseEditField editField) {
+        System.out.println("editField = " + editField);
+        try {
+            fieldService.patchEditField(fieldId, editField);
+            return "redirect:/admin/field/" + fieldId;
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("options", new FieldOption());
+            redirectAttributes.addFlashAttribute("fieldId", fieldId);
+            redirectAttributes.addFlashAttribute("editField", editField);
+            return "admin_field_edit";
+        }
     }
 
     /**
@@ -60,27 +78,6 @@ public class AdminFieldController {
         return "admin_field_add";
     }
 
-
-    /**
-     * PATCH 구장 수정
-     */
-    @PatchMapping("/{fieldId}")
-    public String fieldPatch(@PathVariable("fieldId") Long fieldId,
-                             RedirectAttributes redirectAttributes,
-                             @ModelAttribute("editField") ResponseEditField editField) {
-        System.out.println("editField = " + editField);
-        try {
-            adminService.patchEditField(fieldId, editField);
-            return "redirect:/admin/field/" + fieldId;
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("options", new FieldOption());
-            redirectAttributes.addFlashAttribute("fieldId", fieldId);
-            redirectAttributes.addFlashAttribute("editField", editField);
-            return "admin_field_edit";
-        }
-    }
-
-
     /**
      * POST 구장 등록
      */
@@ -89,8 +86,10 @@ public class AdminFieldController {
                                BindingResult bindingResult) {
         if (bindingResult.hasErrors()) return "admin_field_add";
 
-        adminService.saveField(saveFieldForm);
+        fieldService.saveField(saveFieldForm);
         return "redirect:/admin/field";
     }
+
+
 
 }

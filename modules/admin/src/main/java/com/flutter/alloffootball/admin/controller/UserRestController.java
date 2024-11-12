@@ -3,7 +3,7 @@ package com.flutter.alloffootball.admin.controller;
 import com.flutter.alloffootball.admin.dto.PageUser;
 import com.flutter.alloffootball.admin.dto.user.RequestSearchUser;
 import com.flutter.alloffootball.admin.dto.user.ResponseUserOrder;
-import com.flutter.alloffootball.admin.service.AdminPageService;
+import com.flutter.alloffootball.admin.service.PageService;
 import com.flutter.alloffootball.common.config.security.CustomUserDetails;
 import com.flutter.alloffootball.common.dto.PageDto;
 import com.flutter.alloffootball.common.dto.Response;
@@ -18,15 +18,15 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/admin/user")
-public class AdminRestUserController {
+public class UserRestController {
 
-    private final AdminPageService adminPageService;
+    private final PageService pageService;
 
     @GetMapping("/get")
     public ResponseEntity<Response> userList(@ModelAttribute RequestSearchUser data) {
         System.out.println("data = " + data);
         Pageable pageable = PageRequest.of(data.getPage() - 1, 10);
-        return Response.ok(new PageUser<>(adminPageService.findAllBySearchUser(data, pageable), data));
+        return Response.ok(new PageUser<>(pageService.findAllBySearchUser(data, pageable), data));
     }
 
     @GetMapping("/order/get")
@@ -34,7 +34,7 @@ public class AdminRestUserController {
                                                   @RequestParam(name = "page", defaultValue = "1") int page) {
         System.out.println("page = " + page);
         Pageable pageable = PageRequest.of(page - 1, 5);
-        Page<ResponseUserOrder> result = adminPageService.findAllByUserOrder(userDetails.getUser().getId(), pageable);
+        Page<ResponseUserOrder> result = pageService.findAllByUserOrder(userDetails.getUser().getId(), pageable);
         return Response.ok(new PageDto<>(result));
     }
 }

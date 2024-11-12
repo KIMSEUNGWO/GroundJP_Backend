@@ -1,9 +1,20 @@
 package com.flutter.alloffootball.admin.repository;
 
+import com.flutter.alloffootball.common.jparepository.JpaAdminRepository;
 import com.flutter.alloffootball.common.domain.admin.Admin;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Repository;
 
-public interface AdminRepository {
+@Repository
+@RequiredArgsConstructor
+public class AdminRepository {
 
-    Admin findByAccount(String account);
+    private final JpaAdminRepository jpaAdminRepository;
+
+    public Admin findByAccount(String account) {
+        return jpaAdminRepository.findByAccount(account)
+            .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    }
 
 }

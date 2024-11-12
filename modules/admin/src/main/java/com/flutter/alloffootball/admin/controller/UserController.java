@@ -1,7 +1,7 @@
 package com.flutter.alloffootball.admin.controller;
 
 import com.flutter.alloffootball.admin.dto.user.ResponseViewUser;
-import com.flutter.alloffootball.admin.service.AdminService;
+import com.flutter.alloffootball.admin.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/admin/user")
-public class AdminUserController {
+public class UserController {
 
-    private final AdminService adminService;
+    private final UserService userService;
 
     @GetMapping
     public String user() {
@@ -26,7 +26,7 @@ public class AdminUserController {
      */
     @GetMapping("/{userId}")
     public String fieldViewPage(@PathVariable("userId") long userId, Model model) {
-        ResponseViewUser viewUser = adminService.findByIdViewUser(userId);
+        ResponseViewUser viewUser = userService.findByIdViewUser(userId);
         model.addAttribute("user", viewUser);
         return "admin_user_view";
     }

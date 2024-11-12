@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class AdminNoticeRepository {
+public class NoticeRepository {
 
     private final JpaNoticeRepository jpaNoticeRepository;
 

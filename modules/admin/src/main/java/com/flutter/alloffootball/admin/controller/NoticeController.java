@@ -3,7 +3,7 @@ package com.flutter.alloffootball.admin.controller;
 import com.flutter.alloffootball.admin.dto.notice.RequestEditNoticeForm;
 import com.flutter.alloffootball.admin.dto.notice.RequestSaveNoticeForm;
 import com.flutter.alloffootball.admin.dto.notice.ResponseNoticeView;
-import com.flutter.alloffootball.admin.service.AdminNoticeService;
+import com.flutter.alloffootball.admin.service.NoticeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,9 +15,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/admin/notice")
-public class AdminNoticeController {
+public class NoticeController {
 
-    private final AdminNoticeService noticeService;
+    private final NoticeService noticeService;
 
     @GetMapping
     public String notice() {

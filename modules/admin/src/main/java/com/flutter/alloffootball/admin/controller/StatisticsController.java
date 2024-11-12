@@ -6,7 +6,6 @@ import com.flutter.alloffootball.common.batch.service.MatchStatisticsService;
 import com.flutter.alloffootball.common.batch.service.RegionStatisticsService;
 import com.flutter.alloffootball.common.batch.service.UserStatisticsService;
 import com.flutter.alloffootball.common.dto.Response;
-import com.flutter.alloffootball.common.enums.region.Region;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -22,7 +21,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/admin")
 @RequiredArgsConstructor
-public class AdminStatisticsController {
+public class StatisticsController {
 
     private final MatchStatisticsService matchStatisticsService;
     private final UserStatisticsService userStatisticsService;

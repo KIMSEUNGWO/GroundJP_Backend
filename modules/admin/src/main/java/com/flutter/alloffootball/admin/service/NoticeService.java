@@ -3,7 +3,7 @@ package com.flutter.alloffootball.admin.service;
 import com.flutter.alloffootball.admin.dto.notice.RequestEditNoticeForm;
 import com.flutter.alloffootball.admin.dto.notice.RequestSaveNoticeForm;
 import com.flutter.alloffootball.admin.dto.notice.ResponseNoticeView;
-import com.flutter.alloffootball.admin.repository.AdminNoticeRepository;
+import com.flutter.alloffootball.admin.repository.NoticeRepository;
 import com.flutter.alloffootball.common.domain.admin.Notice;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,9 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class AdminNoticeService {
+public class NoticeService {
 
-    private final AdminNoticeRepository adminNoticeRepository;
+    private final NoticeRepository noticeRepository;
 
     @Transactional(readOnly = true)
     public ResponseNoticeView findByNoticeId(Long noticeId) {
@@ -27,7 +27,7 @@ public class AdminNoticeService {
             .title(form.getTitle())
             .content(form.getContent())
             .build();
-        adminNoticeRepository.save(saveNotice);
+        noticeRepository.save(saveNotice);
     }
 
     public RequestEditNoticeForm getEditForm(Long noticeId) {
@@ -36,7 +36,7 @@ public class AdminNoticeService {
     }
 
     private Notice getByNoticeId(Long noticeId) {
-        return adminNoticeRepository.findByNoticeId(noticeId);
+        return noticeRepository.findByNoticeId(noticeId);
     }
 
     public void editNotice(Long noticeId, RequestEditNoticeForm form) {
@@ -45,6 +45,6 @@ public class AdminNoticeService {
     }
 
     public void deleteNotice(Long noticeId) {
-        adminNoticeRepository.deleteNotice(noticeId);
+        noticeRepository.deleteNotice(noticeId);
     }
 }

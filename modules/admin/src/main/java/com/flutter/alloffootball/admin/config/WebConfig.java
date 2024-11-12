@@ -12,7 +12,6 @@ import org.springframework.web.filter.HiddenHttpMethodFilter;
 
 @Configuration
 @EnableJpaRepositories
-@ComponentScan(basePackages = "com.flutter.alloffootball")
 public class WebConfig {
 
     @Bean

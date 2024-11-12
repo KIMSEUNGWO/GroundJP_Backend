@@ -8,7 +8,7 @@ import com.flutter.alloffootball.admin.dto.notice.ResponseNoticeListView;
 import com.flutter.alloffootball.admin.dto.user.RequestSearchUser;
 import com.flutter.alloffootball.admin.dto.user.ResponseSearchUser;
 import com.flutter.alloffootball.admin.dto.user.ResponseUserOrder;
-import com.flutter.alloffootball.admin.repository.AdminPageRepository;
+import com.flutter.alloffootball.admin.repository.PageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,28 +18,27 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class AdminPageService {
+public class PageService {
 
-    private final AdminPageRepository adminPageRepository;
+    private final PageRepository pageRepository;
 
     public Page<ResponseSearchField> findAllBySearchField(RequestSearchField data, Pageable pageable) {
-        return adminPageRepository.findAllBySearchField(data, pageable)
-            .map(ResponseSearchField::new);
+        return pageRepository.findAllBySearchField(data, pageable);
     }
 
     public Page<ResponseSearchMatch> findAllBySearchMatch(RequestSearchMatch data, Pageable pageable) {
-        return adminPageRepository.findAllBySearchMatch(data, pageable);
+        return pageRepository.findAllBySearchMatch(data, pageable);
     }
 
     public Page<ResponseSearchUser> findAllBySearchUser(RequestSearchUser data, Pageable pageable) {
-        return adminPageRepository.findAllBySearchUser(data, pageable);
+        return pageRepository.findAllBySearchUser(data, pageable);
     }
 
     public Page<ResponseUserOrder> findAllByUserOrder(Long userId, Pageable pageable) {
-        return adminPageRepository.findAllByUserOrder(userId, pageable);
+        return pageRepository.findAllByUserOrder(userId, pageable);
     }
 
     public Page<ResponseNoticeListView> findAllBySearchNotice(Pageable pageable) {
-        return adminPageRepository.findAllBySearchNotice(pageable).map(ResponseNoticeListView::new);
+        return pageRepository.findAllBySearchNotice(pageable);
     }
 }
