@@ -5,6 +5,12 @@
     margin-bottom: 30px;
 }
 
+@media (max-width: 1260px) {
+    .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(227px, 1fr));
+    }
+}
+
 .stat-card {
     padding: 10px 10px 10px 20px;
     border-radius: 10px;
@@ -88,4 +94,12 @@
     outline: none;
     cursor: pointer;
     font-family: 'Tmoney-Regular';
+}
+
+.canvas-container {
+    height: 300px;
+}
+#regionChart {
+    width: 100% !important;
+    height: 100% !important;
 }
