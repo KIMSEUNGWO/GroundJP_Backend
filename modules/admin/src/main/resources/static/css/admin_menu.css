@@ -1,6 +1,10 @@
 .container {
     display: flex;
     min-height: calc(100vh - 60px);
+    position: relative;
+}
+#main {
+    z-index: 2;
 }
 
 #sideMenu {
@@ -60,6 +64,24 @@
 
 
 @media (max-width: 1024px) {
+
+    #sideMenu {
+        position: absolute;  /* 메뉴를 문서 흐름에서 제거 */
+        left: 0; top: 0;
+        /*height: -webkit-fill-available;*/
+        height: 100%;
+        z-index: 3;
+    }
+    /* 가짜 요소로 원래 공간 유지 */
+    .container {
+        /* aside placeholder 추가 */
+        &::before {
+            content: '';
+            display: block;
+            width: 76px;  /* 축소된 메뉴 너비와 동일 */
+            flex-shrink: 0;
+        }
+    }
     #sideMenu li {
         width: 44px;
     }
