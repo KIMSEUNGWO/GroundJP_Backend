@@ -1,0 +1,7 @@
+.searchResult > a {
+    grid-template-columns: 80% 20%;
+}
+
+.searchResult .result > *:first-child {
+    justify-content: start;
+}

@@ -1,0 +1,133 @@
+@font-face {
+    font-family: 'Pretendard-Medium';
+    src: url(/font/Pretendard-Medium.otf);
+}
+
+@font-face {
+    font-family: 'Pretendard-Light';
+    src: url(/font/Pretendard-Light.otf);
+}
+
+@font-face {
+    font-family: 'Pretendard-Bold';
+    src: url(/font/Pretendard-Bold.otf);
+}
+@font-face {
+    font-family: 'Pretendard-SemiBold';
+    src: url(/font/Pretendard-SemiBold.otf);
+}
+@font-face {
+    font-family: 'Pretendard-ExtraBold';
+    src: url(/font/Pretendard-ExtraBold.otf);
+}
+
+@font-face {
+    font-family: 'Tmoney-Regular';
+    src: url(/font/TmoneyRoundWindRegular.otf);
+}
+@font-face {
+    font-family: 'Tmoney-ExtraBold';
+    src: url(/font/TmoneyRoundWindExtraBold.otf);
+}
+:root{
+    --container-color: #FBFBFB;
+
+    --main-color-1: #F3EFEA;
+    --main-color-2: #DCD8D0;
+    --point-color: #8F5C54;
+
+    --font-color-1: #292929;
+    --font-color-2: #767676;
+    --font-color-3: #888888;
+
+    --button-color-1: #253331;
+    --button-color-2: #A5B0AF;
+
+    --border-color: #E1DFE9;
+    --border-radius: 5px;
+}
+
+*{
+    font-family: 'Tmoney-Regular';
+    box-sizing: border-box;
+    margin: 0;
+    color: var(--font-color-1);
+}
+
+body{
+    background-color: var(--container-color);
+    min-width: 760px;
+}
+
+button {
+    cursor: pointer;
+}
+button:hover {
+    opacity: 0.85;
+}
+
+span {
+    font-size: 14px;
+}
+
+ul {
+    padding: 0;
+}
+li {
+    list-style: none;
+}
+a {
+    text-decoration: none;
+}
+svg {
+    width: 20px;
+    height: 20px;
+}
+
+input {
+    outline: none;
+    padding: 12px 15px;
+}
+
+.inputBox {
+    border: solid 1px var(--border-color);
+    background-color: white;
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mainBtn {
+    background-color: var(--button-color-1);
+}
+.subBtn {
+    background-color: var(--button-color-2);
+}
+
+.mainBtn, .subBtn {
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.mainBtn span, .subBtn span {
+    pointer-events: none;
+}
+.mainBtn:hover, .subBtn:hover {
+    opacity: 0.85;
+}
+
+
+.disabled {
+    display: none !important;
+}
+
+.option * {
+    pointer-events: none;
+}
+.regionOption {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}

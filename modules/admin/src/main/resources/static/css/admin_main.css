@@ -1,0 +1,246 @@
+#main {
+    padding: 40px;
+    flex-grow: 1;
+}
+#main > h3, #main > #mainHeader {
+    margin-bottom: 40px;
+}
+#mainHeader {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    svg {
+        width: 18px;
+        height: 19px;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+}
+
+#searchControll {
+    margin-bottom: 50px;
+    display: flex;
+    gap: 15px;
+    height: 40px;
+}
+#searchL {
+    display: flex;
+    gap: 10px;
+    position: relative;
+}
+#searchR button {
+    width: 100px;
+    height: 100%;
+}
+
+.infoBox {
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: 2px 2px 5px rgba(228, 228, 228, 0.25);
+    border: 1px solid var(--border-color);
+    padding: 14px 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+    height: 45px;
+
+}
+.infoBox > *:first-child {
+    color: var(--font-color-3);
+}
+.infoBox svg {
+    width: 20px;
+    height: 20px;
+}
+.infoBox svg path {
+    fill: var(--font-color-3);
+}
+.infoBox span {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.infoBox input[type='text'] {
+    border: none;
+    flex: 1;
+    padding: 0;
+}
+.infoBox button.inputBox{
+    width: 100%;
+    justify-content: space-between;
+    display: flex;
+    border: none;
+}
+.infoBox textarea {
+    width: 100%;
+    border: none;
+    outline: none;
+}
+
+/* 구장정보 */
+.infoWrap {
+    margin-top: 40px;
+}
+.infoWrap > h4 {
+    margin-bottom: 21px;
+}
+
+/* 검색조건 공통 CSS */
+#region, #sex, #state, #matchCount, #matchPerson, #matchTime {
+    display: flex;
+    min-width: 120px;
+    padding: 0 10px;
+    flex: 1;
+}
+
+.subOption {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    padding: 1rem 1.5rem;
+    z-index: 1;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: start;
+    font-size: 14px;
+}
+.subOption.infoBox {
+    height: initial;
+}
+.subOption li {
+    display: flex;
+    gap: 16px;
+}
+.subOption label {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.subOption li > * {
+    cursor: pointer;
+}
+
+#searchWord {
+    min-width: 200px;
+    max-width: 330px;
+}
+
+
+.searchResult > a {
+    width: 100%;
+    height: 40px;
+    align-items: center;
+    display: grid;
+    overflow: hidden;
+
+    border-bottom: 1px solid var(--border-color);
+    border-left: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+}
+.searchResult:not(#searchTitle) > a:hover {
+    opacity: 0.75;
+}
+#searchTitle > a {
+    border-top: 1px solid var(--border-color);
+    border-top-left-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius);
+}
+.searchResult:not(#searchTitle) > a:last-child {
+    border-bottom: 1px solid var(--border-color);
+    border-bottom-left-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+}
+.searchResult > a > span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+
+}
+.searchResult .result span {
+    padding: 0 16px;
+}
+
+.searchResult .none {
+    justify-content: center;
+    color: var(--font-color-2);
+    cursor: default;
+    display: flex;
+    background: white;
+    height: 70px;
+    border-left: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+
+    border-bottom-left-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+}
+
+.searchResult > a > * {
+    height: 100%;
+}
+.searchResult > a > *:nth-child(odd):not(.none) {
+    background-color: var(--main-color-1);
+}
+.searchResult > a > *:nth-child(even):not(.none) {
+    background-color: white;
+}
+.searchResult li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+#searchResult {
+    display: block;
+}
+
+.grid-container {
+    display: grid; /* Grid Layout을 활성화 */
+    gap: 12px;
+}
+#fieldInfo, #matchInfo {
+    grid-template-columns: repeat(4, 1fr); /* 4개의 열을 같은 비율로 설정 */
+}
+#noticeInfo {
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.item-4 {
+    grid-column: 1 / 5; /* 1열에서 5열까지 차지 (4칸) */
+}
+.item-5 {
+    grid-column: 1 / 6;
+}
+
+.infoBox.item-4, .infoBox.item-5 {
+    height: inherit;
+    flex-direction: column;
+    align-items: start;
+}
+.infoBox.item-4 > *, .infoBox.item-5 > * {
+    display: block;
+}
+
+.options {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+}
+.option_box {
+    position: relative;
+}
+.option {
+    height: 40px;
+}
+
+@media (max-width: 845px) {
+
+}

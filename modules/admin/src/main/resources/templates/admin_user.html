@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/admin_menu.css">
+    <link rel="stylesheet" href="/css/admin_main.css">
+    <link rel="stylesheet" href="/css/admin_user.css">
+    <link rel="stylesheet" href="/css/pagination.css">
+    <script type="module" src="/js/pagination.js"></script>
+    <script type="module" src="/js/fetch.js"></script>
+    <script type="module" src="/js/admin_search_user.js"></script>
+    <title>회원관리 :: 관리자</title>
+</head>
+<body>
+     <header th:replace="~{/common/header :: header}"></header>
+    <div class="container">
+        <aside class="side box" th:replace="~{/common/admin_menu :: adminMenu}"></aside>
+        <div id="main">
+            <h3>회원관리</h3>
+            <div id="searchControll">
+                <div id="searchL">
+                    <input type="text" class="inputBox" name="searchWord" id="searchWord" placeholder="회원의 닉네임을 입력해주세요." style="width: 300px;">
+                </div>
+                <div id="searchR">
+                    <button type="button" class="mainBtn" id="search">검색</button>
+                </div>
+            </div>
+            <div id="result">
+                <div class="group">
+                    <h4 class="total">총 0건</h4>
+                </div>
+                <ul class="searchResult" id="searchTitle">
+                    <a disabled>
+                        <li>번호</li>
+                        <li>닉네임</li>
+                        <li>소셜</li>
+                        <li>성별</li>
+                        <li>생년월일</li>
+                        <li>가입일</li>
+                        <li>상태</li>
+                    </a>
+                </ul>
+                <ul class="searchResult" id="searchResult">
+                    <a class="none">검색 결과가 없습니다.</a>
+                </ul>
+                <div class="pagination">
+                    <button type="button" class="button_first" disabled="true" id="first-page">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160zm352-160l-160 160c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L301.3 256 438.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0z"/></svg>
+                    </button>
+                    <button type="button" class="button_previous" disabled="true" id="prev-page">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
+                    </button>
+                    <ol class="page_list"></ol>
+                    <button type="button" class="button_next" id="next-page">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
+                    </button>
+                    <button type="button" class="button_last" id="last-page">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M470.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 256 265.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160zm-352 160l160-160c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L210.7 256 73.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0z"/></svg>
+                    </button>
+                </div>    
+            </div>
+        </div>
+    </div>
+</body>
+</html>

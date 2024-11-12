@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/admin_menu.css">
+    <link rel="stylesheet" href="/css/admin_main.css">
+    <link rel="stylesheet" href="/css/admin_match.css">
+    <link rel="stylesheet" href="/css/calendar_range.css">
+    <link rel="stylesheet" href="/css/pagination.css">
+    <script type="module" src="/js/calendar_range.js"></script>
+    <script type="module" src="/js/option_select.js"></script>
+    <script type="module" src="/js/pagination.js"></script>
+    <script type="module" src="/js/fetch.js"></script>
+    <script type="module" src="/js/admin_search_match.js"></script>
+    <title>경기관리 :: 프로젝트</title>
+</head>
+<body>
+    <body>
+         <header th:replace="~{/common/header :: header}"></header>
+        <div class="container">
+             <aside class="side box" th:replace="~{/common/admin_menu :: adminMenu}"></aside>
+            <div id="main">
+                <h3>경기관리</h3>
+                <div class="options">
+                    <div class="date_picker_wrapper">
+                        <div class="date_picker_calendar">
+                            <summary id="date_range">
+                                <div class="date_wrap">
+                                    <input type="text" name="startDate" inputmode="numeric" placeholder="YYYY/MM/DD" aria-pressed="false" readonly>
+                                </div>
+                                <span>-</span>
+                                <div class="date_wrap">
+                                    <input type="text" name="endDate" inputmode="numeric" placeholder="YYYY/MM/DD" aria-pressed="false" readonly>
+                                </div>
+                            </summary>
+                            <div id="date_range_calendar" class="subOption disabled">
+                                <div id="calendar_header">
+                                    <button type="button" id="preButton">
+                                        <svg transform='rotate(180)' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                                            <path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
+                                    </button>
+                                    <div class="months">
+                                        <div id="leftMonth"></div>
+                                        <div id="rightMonth"></div>
+                                    </div>
+                                    <button type="button" id="nextButton">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                                            <path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
+                                    </button>
+                                </div>
+                                <div id="calendar_body">
+                                    <div id="leftBody">
+                                        <div class="week">
+                                            <div class="cell"><div>일</div></div>
+                                            <div class="cell"><div>월</div></div>
+                                            <div class="cell"><div>화</div></div>
+                                            <div class="cell"><div>수</div></div>
+                                            <div class="cell"><div>목</div></div>
+                                            <div class="cell"><div>금</div></div>
+                                            <div class="cell"><div>토</div></div>
+                                        </div>
+                                    </div>
+                                    <div id="rightBody">
+                                        <div class="week">
+                                            <div class="cell"><div>일</div></div>
+                                            <div class="cell"><div>월</div></div>
+                                            <div class="cell"><div>화</div></div>
+                                            <div class="cell"><div>수</div></div>
+                                            <div class="cell"><div>목</div></div>
+                                            <div class="cell"><div>금</div></div>
+                                            <div class="cell"><div>토</div></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="calendar_bottom">
+                                    <button type="button" id="calendar_confirm" class="mainBtn">완료</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 12px">
+                        <div class="option_box">
+                            <button class="inputBox option" id="region" style="justify-content: space-between">
+                                <span aria-label="region">전체</span>
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9.1706 14.7687C9.56697 15.3571 10.433 15.3571 10.8294 14.7687L15.0123 8.55866C15.4597 7.89443 14.9838 7 14.1829 7H5.81709C5.01624 7 4.54029 7.89443 4.9877 8.55866L9.1706 14.7687Z" fill="black"/>
+                                </svg>
+                            </button>
+                            <ul class="subOption inputBox disabled regionOption">
+                                <li>
+                                    <input type="radio" name="region" id="regionAll" value="" checked>
+                                    <label for="regionAll">전국</label>
+                                </li>
+                                <li th:each="loc : ${region}">
+                                    <input type="radio" name="region" th:id="${loc.name()}" th:value="${loc}">
+                                    <label th:for="${loc.name()}" th:text="${loc.getKo()}"></label>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="option_box">
+                            <button class="inputBox option" id="sex" style="justify-content: space-between">
+                                <span aria-label="sex">전체</span>
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9.1706 14.7687C9.56697 15.3571 10.433 15.3571 10.8294 14.7687L15.0123 8.55866C15.4597 7.89443 14.9838 7 14.1829 7H5.81709C5.01624 7 4.54029 7.89443 4.9877 8.55866L9.1706 14.7687Z" fill="black"/>
+                                </svg>
+                            </button>
+                            <ul class="subOption inputBox disabled">
+                                <li>
+                                    <input type="radio" name="sex" id="sexAll" value="" checked>
+                                    <label for="sexAll">남녀모두</label>
+                                </li>
+                                <li th:each="sexType : ${sex}">
+                                    <input type="radio" name="sex" th:id="${sexType.name()}" th:value="${sexType.name()}">
+                                    <label th:for="${sexType.name()}" th:text="${sexType.getKo()}"></label>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="option_box">
+                            <button class="inputBox option" id="state" style="justify-content: space-between">
+                                <span aria-label="state"></span>
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9.1706 14.7687C9.56697 15.3571 10.433 15.3571 10.8294 14.7687L15.0123 8.55866C15.4597 7.89443 14.9838 7 14.1829 7H5.81709C5.01624 7 4.54029 7.89443 4.9877 8.55866L9.1706 14.7687Z" fill="black"/>
+                                </svg>
+                            </button>
+                            <ul class="subOption inputBox disabled">
+                                <li>
+                                    <input type="radio" name="state" id="stateAll" value="" checked>
+                                    <label for="stateAll">상태전체</label>
+                                </li>
+                                <li th:each="matchStatus : ${state}">
+                                    <input type="radio" name="state" th:id="${matchStatus.name()}" th:value="${matchStatus.name()}">
+                                    <label th:for="${matchStatus.name()}" th:text="${matchStatus.getKo()}"></label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="searchControll">
+                    <input type="text" style="width: 330px;" class="inputBox" name="searchWord" id="searchWord" placeholder="구장 이름을 입력해주세요.">
+                    <div id="searchR">
+                        <button type="button" class="mainBtn" id="search">검색</button>
+                    </div>
+                </div>
+                <div class="group">
+                    <h4 class="total">총 0건</h4>
+                </div>
+                <ul class="searchResult" id="searchTitle">
+                    <a disabled>
+                        <li>경기일</li>
+                        <li>지역</li>
+                        <li>성별</li>
+                        <li>구장명</li>
+                        <li>인원</li>
+                        <li>상태</li>
+                    </a>
+                </ul>
+                <ul class="searchResult" id="searchResult">
+                    <li class="none">검색 결과가 없습니다.</li>
+                </ul>
+                <div class="pagination">
+                    <button type="button" class="button_first" disabled="true" id="first-page">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160zm352-160l-160 160c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L301.3 256 438.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0z"/></svg>
+                    </button>
+                    <button type="button" class="button_previous" disabled="true" id="prev-page">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
+                    </button>
+                    <ol class="page_list"></ol>
+                    <button type="button" class="button_next" id="next-page">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
+                    </button>
+                    <button type="button" class="button_last" id="last-page">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M470.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 256 265.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160zm-352 160l160-160c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L210.7 256 73.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0z"/></svg>
+                    </button>
+                </div>  
+            </div>
+        </div>
+    </body>
+</body>
+</html>

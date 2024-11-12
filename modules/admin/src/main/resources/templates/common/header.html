@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <header th:fragment="header">
+        <img src="/images/logo.svg" alt="로고이미지">
+        <form id="flexR" method="post" action="/admin/logout">
+            <div id="profile">
+                <span class="name" th:text="${#authentication.principal.admin.name}"></span>
+                <span th:text="${#authentication.principal.admin.authority.ko}"></span>
+            </div>
+            <button type="submit">로그아웃</button>
+        </form>
+    </header>
+</body>
+</html>

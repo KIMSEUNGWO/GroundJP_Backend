@@ -1,0 +1,96 @@
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    padding: 10px 10px 10px 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.stat-card h3 {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+.stat-card div, .stat-card span {
+    text-align: right;
+}
+
+.stat-card .value {
+    font-size: 21px;
+    font-weight: bold;
+    color: var(--font-color-1);
+}
+
+.stat-card .trend {
+    font-size: 12px;
+    margin-left: 10px;
+}
+.chart-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--font-color-2);
+    pointer-events: none;
+}
+
+
+
+.charts-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 200px);
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.chart-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bar-chart-container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.date-range-div {
+    color: #666;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+.date-range-div-div {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.date-range-div select {
+    border: none;
+    color: var(--font-color-3);
+    font-size: 14px;
+    outline: none;
+    cursor: pointer;
+    font-family: 'Tmoney-Regular';
+}
+
+#regionChart {
+    width: 100% !important;
+    height: 100% !important;
+}

@@ -1,0 +1,6 @@
+rootProject.name = 'alloffootball'
+
+include 'admin', 'common'
+
+project(':admin').projectDir = new File("./modules/admin");
+project(':common').projectDir = new File("./modules/common");

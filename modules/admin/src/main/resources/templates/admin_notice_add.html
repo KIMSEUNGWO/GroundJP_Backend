@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/admin_menu.css">
+    <link rel="stylesheet" href="/css/admin_main.css">
+    <script src="/js/admin_notice.js"></script>
+    <title>공지사항 :: 프로젝트</title>
+
+    <style>
+        .submitBox {
+            display: flex;
+            justify-content: right;
+            gap: 13px;
+            margin-top: 50px;
+        }
+        .submitBox > * {
+            width: 100px;
+            height: 40px;
+            font-size: 14px;
+        }
+        .submitBox > * {
+            display: block;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .infoBox span {
+            white-space: initial;
+            text-overflow: initial;
+            overflow: initial;
+        }
+    </style>
+</head>
+<body>
+    <body>
+        <header th:replace="~{/common/header :: header}"></header>
+        <div class="container">
+            <aside class="side box" th:replace="~{/common/admin_menu :: adminMenu}"></aside>
+            <div id="main">
+                <div id="mainHeader">
+                    <h3>공지사항 등록</h3>
+                </div>
+                <form th:action="@{/admin/notice/post}" method="post" th:object="${form}">
+                    <div class="infoWrap">
+                        <div id="noticeInfo" class="grid-container">
+                            <div class="infoBox" style="grid-column: 1 / 6; grid-row: 1;">
+                                <span>제목</span>
+                                <input type="text" placeholder="제목을 입력해주세요." th:field="*{title}"></input>
+                            </div>
+                            <div class="infoBox item-5" style="grid-row: 2">
+                                <span>내용</span>
+                                <textarea rows="10" th:field="*{content}"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="submitBox">
+                        <button type="submit" class="mainBtn">등록</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+</body>
+</html>

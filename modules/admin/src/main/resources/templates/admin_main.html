@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/admin_menu.css">
+    <link rel="stylesheet" href="/css/admin_main.css">
+    <link rel="stylesheet" href="/css/calendar_range.css">
+    <link rel="stylesheet" href="/css/chart.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+    <script type="module" src="/js/fetch.js"></script>
+    <script type="module" src="/js/chart.js"></script>
+    <script type="module" src="/js/calendar_range.js"></script>
+    <title>관리자 메인 :: 프로젝트</title>
+</head>
+<body>
+    <header th:replace="~{/common/header :: header}"></header>
+    <div class="container">
+        <aside class="side box" th:replace="~{/common/admin_menu :: adminMenu}"></aside>
+        <div id="main">
+            <h3>전체통계</h3>
+            <div class="stats-grid">
+                <div class="stat-card" aria-label="모집중" aria-border-color="#2F69DD" th:aria-valuetext="${matchStats.getOpenCnt()}">
+                    <h3>모집중</h3>
+                    <div>
+                        <span class="value" th:text="${#numbers.formatInteger(matchStats.getOpenCnt(), 0, 'COMMA')}">0</span>
+                    </div>
+                </div>
+                <div class="stat-card" aria-label="마감임박" aria-border-color="#FF5D5D" th:aria-valuetext="${matchStats.getClosingSoonCnt()}">
+                    <h3>마감임박</h3>
+                    <div>
+                        <span class="value" th:text="${#numbers.formatInteger(matchStats.getClosingSoonCnt(), 0, 'COMMA')}">0</span>
+                    </div>
+                </div>
+                <div class="stat-card" aria-label="마감" aria-border-color="#767676" th:aria-valuetext="${matchStats.getClosedCnt()}">
+                    <h3>마감</h3>
+                    <div>
+                        <span class="value" th:text="${#numbers.formatInteger(matchStats.getClosedCnt(), 0, 'COMMA')}">0</span>
+                    </div>
+                </div>
+                <div class="stat-card" aria-label="생성된 구장" aria-border-color="var(--point-color)" th:aria-valuetext="${matchStats.getCreatedFieldCnt()}">
+                    <h3>생성된 구장</h3>
+                    <div>
+                        <span class="value" th:text="${#numbers.formatInteger(matchStats.getCreatedFieldCnt(), 0, 'COMMA')}">0</span>
+                    </div>
+                </div>
+                <div class="stat-card" aria-label="마감" aria-border-color="var(--point-color)" th:aria-valuetext="${matchStats.getCreatedMatchCnt()}">
+                    <h3>생성된 경기</h3>
+                    <div>
+                        <span class="value" th:text="${#numbers.formatInteger(matchStats.getCreatedMatchCnt(), 0, 'COMMA')}">0명</span>
+                    </div>
+                </div>
+                <div class="stat-card" aria-label="회원 수" aria-border-color="var(--point-color)" th:aria-valuetext="${userStats.getUserCnt()}" th:aria-trend="${userStats.getDelta()}">
+                    <h3>회원 수</h3>
+                    <div>
+                        <span class="value" th:text="${#numbers.formatInteger(userStats.getUserCnt(), 0, 'COMMA') + '명'}">0명</span>
+                        <span class="trend">- 0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="charts-container">
+                <div class="chart-card" aria-label="성별" th:unless="${#lists.isEmpty(userStats.getGenderStats())}">
+                    <div class="data" th:each="gender : ${userStats.getGenderStats()}"  th:data-is-label="${gender.getKey()}" th:data-is="${gender.getValue()}" th:data-is-color="${gender.getColor()}"></div>
+<!--                    <div class="data" data-is-label="여성" data-is="45" data-is-color="#ff4444"></div>-->
+                    <canvas id="genderChart"></canvas>
+                </div>
+                <div class="chart-card" aria-label="소셜" th:unless="${#lists.isEmpty(userStats.getSocialStats())}">
+                    <div class="data" th:each="social : ${userStats.getSocialStats()}"  th:data-is-label="${social.getKey()}" th:data-is="${social.getValue()}" th:data-is-color="${social.getColor()}"></div>
+<!--                    <div class="data" data-is-label="카카오" data-is="55" data-is-color="#F3DA01"></div>-->
+<!--                    <div class="data" data-is-label="네이버" data-is="45" data-is-color="#08BF5B"></div>-->
+<!--                    <div class="data" data-is-label="애플" data-is="45" data-is-color="#292929"></div>-->
+                    <canvas id="socialChart"></canvas>
+                </div>
+                <div class="chart-card" aria-label="연령" th:unless="${#lists.isEmpty(userStats.getAgeStats())}">
+                    <div class="data" th:each="age : ${userStats.getAgeStats()}"  th:data-is-label="${age.getKey()}" th:data-is="${age.getValue()}" th:data-is-color="${age.getColor()}"></div>
+<!--                    <div class="data" data-is-label="10대" data-is="55" data-is-color="#36b9cc"></div>-->
+<!--                    <div class="data" data-is-label="20대" data-is="100" data-is-color="#1cc88a"></div>-->
+<!--                    <div class="data" data-is-label="30대" data-is="45" data-is-color="#f6c23e"></div>-->
+<!--                    <div class="data" data-is-label="40대" data-is="45" data-is-color="#858796"></div>-->
+                    <canvas id="ageChart"></canvas>
+                </div>
+            </div>
+
+            <div class="bar-chart-container">
+                <div class="date-range-div">
+                    <div class="date-range-div-div">
+                        <h3>지역통계</h3>
+                        <div class="date_picker_wrapper">
+                            <div class="date_picker_calendar">
+                                <summary id="date_range">
+                                    <div class="date_wrap">
+                                        <input type="text" name="startDate" inputmode="numeric" placeholder="YYYY/MM/DD" aria-pressed="false" readonly>
+                                    </div>
+                                    <span>-</span>
+                                    <div class="date_wrap">
+                                        <input type="text" name="endDate" inputmode="numeric" placeholder="YYYY/MM/DD" aria-pressed="false" readonly>
+                                    </div>
+                                </summary>
+                                <div id="date_range_calendar" class="subOption disabled">
+                                    <div id="calendar_header">
+                                        <button type="button" id="preButton">
+                                            <svg transform='rotate(180)' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                                                <path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
+                                        </button>
+                                        <div class="months">
+                                            <div id="leftMonth"></div>
+                                            <div id="rightMonth"></div>
+                                        </div>
+                                        <button type="button" id="nextButton">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                                                <path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
+                                        </button>
+                                    </div>
+                                    <div id="calendar_body">
+                                        <div id="leftBody">
+                                            <div class="week">
+                                                <div class="cell"><div>일</div></div>
+                                                <div class="cell"><div>월</div></div>
+                                                <div class="cell"><div>화</div></div>
+                                                <div class="cell"><div>수</div></div>
+                                                <div class="cell"><div>목</div></div>
+                                                <div class="cell"><div>금</div></div>
+                                                <div class="cell"><div>토</div></div>
+                                            </div>
+                                        </div>
+                                        <div id="rightBody">
+                                            <div class="week">
+                                                <div class="cell"><div>일</div></div>
+                                                <div class="cell"><div>월</div></div>
+                                                <div class="cell"><div>화</div></div>
+                                                <div class="cell"><div>수</div></div>
+                                                <div class="cell"><div>목</div></div>
+                                                <div class="cell"><div>금</div></div>
+                                                <div class="cell"><div>토</div></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="calendar_bottom">
+                                        <button type="button" id="calendar_confirm" class="mainBtn">완료</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <select name="region-sort" id="region-sort">
+                        <option value="COMPLETE_ASC" selected="true">완료건 오름차순</option>
+                        <option value="COMPLETE_DESC">완료건 내림차순</option>
+                        <option value="CANCEL_ASC">취소건 오름차순</option>
+                        <option value="CANCEL_DESC">취소건 내림차순</option>
+                    </select>
+                </div>
+                <canvas id="regionChart"></canvas>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
