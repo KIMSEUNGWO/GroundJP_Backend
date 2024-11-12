@@ -128,42 +128,40 @@ function barChartDraw() {
                     label: '완료',
                     data: sortedData.map(data => data.completeCnt),
                     backgroundColor: '#3F9DE0',
-                    borderRadius: {
-                        topLeft: 0,     topRight: 0,
-                        bottomLeft: 3,  bottomRight: 3
-                    },
+                    borderRadius: sortedData.map((data, index) =>
+                        setBorderRadius(data.completeCnt, data.cancelCnt).completeRadius
+                    ),
                     borderSkipped: false,
                     barPercentage: 0.8,
-                    maxBarThickness: 60  // 최대 막대 너비를 100px로 제한
+                    maxBarThickness: 60
                 },
                 {
                     label: '취소',
                     data: sortedData.map(data => data.cancelCnt),
                     backgroundColor: '#e3e6f0',
-                    borderRadius: {
-                        topLeft: 3,     topRight: 3,
-                        bottomLeft: 0,  bottomRight: 0
-                    },
+                    borderRadius: sortedData.map((data, index) =>
+                        setBorderRadius(data.completeCnt, data.cancelCnt).cancelRadius
+                    ),
                     borderSkipped: false,
                     barPercentage: 0.8,
-                    maxBarThickness: 60  // 최대 막대 너비를 100px로 제한
+                    maxBarThickness: 60
                 }
-            ].sort((o1, o2) => {
-                if (regionSort === 'CANCEL_ASC' || regionSort === 'CANCEL_DESC') {
-                    o2.borderRadius = {
-                        topLeft: 3,     topRight: 3,
-                        bottomLeft: 0,  bottomRight: 0
-                    };
-                    o1.borderRadius = {
-                        topLeft: 0,     topRight: 0,
-                        bottomLeft: 3,  bottomRight: 3
-                    };
-                    return -1;
-                }
-            })
+            ]
+                .sort((o1, o2) => {
+                    if (regionSort === 'CANCEL_ASC' || regionSort === 'CANCEL_DESC') {
+                        o2.borderRadius = o2.data.map((value, index) =>
+                            setBorderRadius(sortedData[index].completeCnt, value).cancelRadius
+                        );
+                        o1.borderRadius = o1.data.map((value, index) =>
+                            setBorderRadius(value, sortedData[index].cancelCnt).completeRadius
+                        );
+                        return -1;
+                    }
+                })
         },
         options: {
             responsive: true,
+            maintainAspectRatio: false,
             scales: {
                 x: {
                     stacked: true,
@@ -186,6 +184,24 @@ function barChartDraw() {
             }
         }
     });
+}
+
+function setBorderRadius(completeData, cancelData) {
+    const completeRadius = {
+        topLeft: cancelData === 0 ? 3 : 0,
+        topRight: cancelData === 0 ? 3 : 0,
+        bottomLeft: 3,
+        bottomRight: 3
+    };
+
+    const cancelRadius = {
+        topLeft: 3,
+        topRight: 3,
+        bottomLeft: completeData === 0 ? 3 : 0,
+        bottomRight: completeData === 0 ? 3 : 0
+    };
+
+    return { completeRadius, cancelRadius };
 }
 
 class ChartData {
