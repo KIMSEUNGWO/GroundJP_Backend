@@ -9,10 +9,10 @@
 <body>
     <header th:fragment="header">
         <img src="/images/logo.svg" alt="로고이미지">
-        <form id="flexR" method="post" action="/admin/logout">
+        <form id="flexR" method="post" th:action="@{/logout}">
             <div id="profile">
                 <span class="name" th:text="${#authentication.principal.admin.name}"></span>
-                <span th:text="${#authentication.principal.admin.authority.ko}"></span>
+                <span th:text="${#authentication.principal.admin.roleAdmin.ko}"></span>
             </div>
             <button type="submit">로그아웃</button>
         </form>

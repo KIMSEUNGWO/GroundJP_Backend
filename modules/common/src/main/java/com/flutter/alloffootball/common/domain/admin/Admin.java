@@ -1,7 +1,7 @@
 package com.flutter.alloffootball.common.domain.admin;
 
 import com.flutter.alloffootball.common.domain.user.User;
-import com.flutter.alloffootball.common.enums.Authority;
+import com.flutter.alloffootball.common.enums.RoleAdmin;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,9 +22,9 @@ public class Admin {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private Authority authority;
+    private RoleAdmin roleAdmin;
 
-    private String account;
+    private String username;
     private String password;
 
     private String name;

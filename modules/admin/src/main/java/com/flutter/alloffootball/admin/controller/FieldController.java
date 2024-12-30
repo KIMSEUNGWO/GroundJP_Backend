@@ -15,7 +15,7 @@ import java.util.Locale;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/admin/field")
+@RequestMapping("/field")
 public class FieldController {
 
     private final FieldService fieldService;
@@ -59,7 +59,7 @@ public class FieldController {
         System.out.println("editField = " + editField);
         try {
             fieldService.patchEditField(fieldId, editField);
-            return "redirect:/admin/field/" + fieldId;
+            return "redirect:/field/" + fieldId;
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("options", new FieldOption());
             redirectAttributes.addFlashAttribute("fieldId", fieldId);
@@ -87,7 +87,7 @@ public class FieldController {
         if (bindingResult.hasErrors()) return "admin_field_add";
 
         fieldService.saveField(saveFieldForm);
-        return "redirect:/admin/field";
+        return "redirect:/field";
     }
 
 

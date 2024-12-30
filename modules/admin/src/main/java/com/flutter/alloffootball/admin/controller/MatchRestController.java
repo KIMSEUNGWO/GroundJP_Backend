@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/admin/match")
+@RequestMapping("/match")
 public class MatchRestController {
 
     private final PageService pageService;

@@ -21,7 +21,7 @@ const calendar = new CalendarRange(
 // 확인 버튼 클릭 시 콜백 설정 (선택적)
 calendar.setOnConfirm((startDate, endDate) => {
     console.log('선택된 날짜 범위:', startDate, endDate);
-    fetch(`/admin/statistics/region?startDate=${startDate}&endDate=${endDate}`)
+    fetch(`/statistics/region?startDate=${startDate}&endDate=${endDate}`)
         .then(res => res.json())
         .then(json => {
             if (json.result !== 'OK') return;

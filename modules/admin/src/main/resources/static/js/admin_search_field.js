@@ -1,6 +1,6 @@
 import { PageData, Pagination } from "./pagination.js";
 
-const pagination = new Pagination('/admin/field', resultForm, [
+const pagination = new Pagination('/field', resultForm, [
     new PageData('word', () => document.querySelector('input[name="searchWord"]')?.value, (result) => {
         let word = (typeof result === 'object' && result != null) ? result.data.word : result;
         let searchWord = document.querySelector('input[name="searchWord"]');
@@ -29,7 +29,7 @@ window.addEventListener('load', ()=>{
 })
 
 function resultForm(searchForm) {
-    return '<a href="/admin/field/' + searchForm.fieldId + '" class="result">' +
+    return '<a href="/field/' + searchForm.fieldId + '" class="result">' +
                 '<span>' + searchForm.fieldId + '</span>' +
                 '<span>' + searchForm.region + '</span>' +
                 '<span>' + searchForm.title +'</span>' +

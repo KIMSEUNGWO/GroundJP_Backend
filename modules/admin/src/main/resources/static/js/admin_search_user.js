@@ -1,7 +1,7 @@
 import { DateFormatter } from "./component/date_format.js";
 import { PageData, Pagination } from "./pagination.js";
 
-const pagination = new Pagination('/admin/user', resultForm, [
+const pagination = new Pagination('/user', resultForm, [
     new PageData('word', () => document.querySelector('input[name="searchWord"]')?.value, (result) => {
         let word = (typeof result === 'object' && result != null) ? result.data.word : result;
         let searchWord = document.querySelector('input[name="searchWord"]');
@@ -24,7 +24,7 @@ window.addEventListener('load', ()=>{
 })
 
 function resultForm(searchForm) {
-    return `<a href="/admin/user/${searchForm.userId}" class="result">
+    return `<a href="/user/${searchForm.userId}" class="result">
                 <span>${searchForm.userId}</span>
                 <span>${searchForm.nickname}</span>
                 <span>${searchForm.social}</span>

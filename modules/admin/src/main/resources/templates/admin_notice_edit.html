@@ -48,7 +48,7 @@
                     </svg>
                     <h4 th:text="${form.title}"></h4>
                 </div>
-                <form th:action="|/admin/notice/${noticeId}|" th:method="PATCH" th:object="${form}">
+                <form th:action="|/notice/${noticeId}|" th:method="PATCH" th:object="${form}">
                     <div class="infoWrap">
                         <div id="noticeInfo" class="grid-container">
                             <div class="infoBox" style="grid-column: 1 / 6; grid-row: 1;">

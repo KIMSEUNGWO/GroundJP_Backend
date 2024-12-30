@@ -12,7 +12,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.List;
 
-@Component
 @Slf4j
 public class FlutterAuthorizationFilter extends OncePerRequestFilter {
 

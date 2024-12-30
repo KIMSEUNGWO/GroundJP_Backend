@@ -1,6 +1,6 @@
 import {Pagination} from "./pagination.js";
 
-const pagination = new Pagination('/admin/user/order', resultForm, []);
+const pagination = new Pagination('/user/order', resultForm, []);
 
 window.addEventListener('popstate', (e) => {
     if (e.state && e.state.data) {
@@ -15,7 +15,7 @@ window.addEventListener('load', ()=>{
 })
 
 function resultForm(searchForm) {
-    return `<a href="/admin/match/${searchForm.matchId}" class="result">
+    return `<a href="/match/${searchForm.matchId}" class="result">
                 <span>${searchForm.orderId}</span>
                 <span>${searchForm.title}</span>
                 <span>${Number(searchForm.price).toLocaleString('ko-KR') + '원'}</span>

@@ -39,10 +39,10 @@
                         <path d="M6.94709 2.64747C6.70104 2.8936 6.56281 3.22738 6.56281 3.5754C6.56281 3.92343 6.70104 4.25721 6.94709 4.50334L13.444 11.0002L6.94709 17.4971C6.70801 17.7446 6.57572 18.0762 6.57871 18.4203C6.5817 18.7644 6.71973 19.0936 6.96308 19.337C7.20643 19.5803 7.53562 19.7184 7.87975 19.7214C8.22389 19.7243 8.55543 19.5921 8.80297 19.353L16.2278 11.9282C16.4738 11.682 16.6121 11.3482 16.6121 11.0002C16.6121 10.6522 16.4738 10.3184 16.2278 10.0723L8.80297 2.64747C8.55684 2.40141 8.22306 2.26318 7.87503 2.26318C7.527 2.26318 7.19322 2.40141 6.94709 2.64747Z" fill="#292929"/>
                     </svg>
                     <h4>
-                        <a th:href="|/admin/field/${fieldInfo.fieldId}|" th:text="${fieldInfo.title}"></a>
+                        <a th:href="|/field/${fieldInfo.fieldId}|" th:text="${fieldInfo.title}"></a>
                     </h4>
                 </div>
-                <form th:action="|/admin/match/field/${fieldInfo.fieldId}|" method="post" th:object="${saveMatchForm}">
+                <form th:action="|/match/field/${fieldInfo.fieldId}|" method="post" th:object="${saveMatchForm}">
                     <div id="matchInfo" class="grid-container">
                         <div class="infoBox" style="grid-column: 1/3">
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">

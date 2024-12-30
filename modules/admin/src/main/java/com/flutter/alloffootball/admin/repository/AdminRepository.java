@@ -12,8 +12,8 @@ public class AdminRepository {
 
     private final JpaAdminRepository jpaAdminRepository;
 
-    public Admin findByAccount(String account) {
-        return jpaAdminRepository.findByAccount(account)
+    public Admin findByUsername(String username) {
+        return jpaAdminRepository.findByUsername(username)
             .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 

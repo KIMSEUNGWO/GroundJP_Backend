@@ -1,7 +1,5 @@
-package com.flutter.alloffootball.common.config;
+package com.flutter.alloffootball.user.config;
 
-import com.flutter.alloffootball.common.enums.Authority;
-import com.flutter.alloffootball.common.enums.Role;
 import com.flutter.alloffootball.common.filter.FlutterAuthorizationFilter;
 import com.flutter.alloffootball.common.filter.JwtAuthorizationFilter;
 import jakarta.servlet.http.HttpServletResponse;
@@ -37,23 +35,7 @@ public class SecureConfig {
         http.authorizeHttpRequests(request ->
             request
                 .requestMatchers("/user/**", "/order/**").authenticated()
-                .requestMatchers("/admin/login").permitAll()
-                .requestMatchers("/admin/user/**").hasAnyAuthority(Authority.SUPER_ADMIN.name(), Authority.HR_ADMIN.name())
-                .requestMatchers("/admin/match/**").hasAnyAuthority(Authority.SUPER_ADMIN.name(), Authority.MATCH_ADMIN.name())
-                .requestMatchers("/admin/**").hasRole(Role.ADMIN.name())
                 .anyRequest().permitAll()
-        );
-
-
-        http.formLogin(formLogin ->
-            formLogin
-                .loginPage("/admin/login")
-                .defaultSuccessUrl("/admin/field")
-        );
-
-        http.logout(formLogout ->
-            formLogout
-                .logoutUrl("/admin/logout")
         );
 
         return http.build();

@@ -1,6 +1,5 @@
 package com.flutter.alloffootball.common.component;
 
-import com.flutter.alloffootball.common.config.security.AdminUserDetails;
 import com.flutter.alloffootball.common.config.security.CustomUserDetails;
 import com.flutter.alloffootball.common.domain.admin.Admin;
 import com.flutter.alloffootball.common.domain.user.User;
@@ -54,12 +53,12 @@ public class SecurityUtil {
     }
 
 
-    public void saveAdminInSecurityContext(Admin admin) {
-        UserDetails userDetails = new AdminUserDetails(admin);
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-
-        SecurityContext context = SecurityContextHolder.createEmptyContext();
-        context.setAuthentication(authentication);
-        SecurityContextHolder.setContext(context);
-    }
+//    public void saveAdminInSecurityContext(Admin admin) {
+//        UserDetails userDetails = new AdminUserDetails(admin);
+//        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+//
+//        SecurityContext context = SecurityContextHolder.createEmptyContext();
+//        context.setAuthentication(authentication);
+//        SecurityContextHolder.setContext(context);
+//    }
 }

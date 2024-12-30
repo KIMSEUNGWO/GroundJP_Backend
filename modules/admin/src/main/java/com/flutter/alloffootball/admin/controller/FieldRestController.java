@@ -14,7 +14,7 @@ import java.util.Locale;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/admin/field")
+@RequestMapping("/field")
 public class FieldRestController {
 
     private final PageService pageService;

@@ -17,7 +17,7 @@ import java.util.Locale;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/admin/match")
+@RequestMapping("/match")
 public class MatchController {
 
     private final FieldService fieldService;
@@ -42,7 +42,7 @@ public class MatchController {
     public String addMatchPost(@PathVariable("fieldId") long fieldId, @ModelAttribute RequestSaveMatchForm form, Model model) {
         System.out.println("form = " + form);
         long matchId = matchService.createMatch(fieldId, form);
-        return String.format("redirect:/admin/match/%d", matchId);
+        return String.format("redirect:/match/%d", matchId);
     }
 
     /**

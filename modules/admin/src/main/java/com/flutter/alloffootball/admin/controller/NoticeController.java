@@ -14,7 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/admin/notice")
+@RequestMapping("/notice")
 public class NoticeController {
 
     private final NoticeService noticeService;
@@ -34,7 +34,7 @@ public class NoticeController {
         if (bindingResult.hasErrors()) return "admin_notice_add";
 
         noticeService.saveNotice(form);
-        return "redirect:/admin/notice";
+        return "redirect:/notice";
     }
 
     @GetMapping("/{noticeId}/edit")
@@ -53,7 +53,7 @@ public class NoticeController {
                              @ModelAttribute("form") RequestEditNoticeForm form) {
         try {
             noticeService.editNotice(noticeId, form);
-            return "redirect:/admin/notice/" + noticeId;
+            return "redirect:/notice/" + noticeId;
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("noticeId", noticeId);
             redirectAttributes.addFlashAttribute("form", form);
@@ -64,7 +64,7 @@ public class NoticeController {
     @DeleteMapping("/{noticeId}")
     public String delete(@PathVariable("noticeId") Long noticeId) {
         noticeService.deleteNotice(noticeId);
-        return "redirect:/admin/notice";
+        return "redirect:/notice";
     }
 
     @GetMapping("/{noticeId}")

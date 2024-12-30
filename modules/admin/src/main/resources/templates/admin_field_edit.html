@@ -26,7 +26,7 @@
                 </svg>
                 <h4 th:text="${editField.title}"></h4>
             </div>
-            <form th:action="@{/admin/field/{fieldId}(fieldId=${fieldId})}" th:method="PATCH" th:object="${editField}" enctype="multipart/form-data">
+            <form th:action="@{/field/{fieldId}(fieldId=${fieldId})}" th:method="PATCH" th:object="${editField}" enctype="multipart/form-data">
                 <div class="preview">
                     <button type="button" class='imgBox' id="addImage">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width='2rem'>

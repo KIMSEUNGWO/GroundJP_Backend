@@ -17,7 +17,7 @@ new CalendarRange(
     lastDate // 마지막날로 제한
 );
 
-const pagination = new Pagination('/admin/match', resultForm, [
+const pagination = new Pagination('/match', resultForm, [
     new PageData('word', () => document.querySelector('input[name="searchWord"]')?.value, (result) => {
         let word = (typeof result === 'object' && result != null) ? result.data.word : result;
         let searchWord = document.querySelector('input[name="searchWord"]');
@@ -69,7 +69,7 @@ window.addEventListener('load', ()=>{
 })
 
 function resultForm(searchForm) {
-    return '<a href="/admin/match/' + searchForm.matchId + '" class="result">' +
+    return '<a href="/match/' + searchForm.matchId + '" class="result">' +
                 '<span>' + jsonDateFormat(searchForm.matchDate) + '</span>' +
                 '<span>' + searchForm.region + '</span>' + 
                 '<span>' + searchForm.sex + '</span>' + 

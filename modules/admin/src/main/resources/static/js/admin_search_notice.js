@@ -2,7 +2,7 @@ import { DateFormatter } from "./component/date_format.js";
 import { Pagination } from "./pagination.js";
 
 const dateFormmater = new DateFormatter();
-const pagination = new Pagination('/admin/notice', resultForm, []);
+const pagination = new Pagination('/notice', resultForm, []);
 
 window.addEventListener('popstate', (e) => {
     if (e.state && e.state.data) {
@@ -17,7 +17,7 @@ window.addEventListener('load', ()=>{
 })
 
 function resultForm(searchForm) {
-    return `<a href="/admin/notice/${searchForm.noticeId}" class="result">
+    return `<a href="/notice/${searchForm.noticeId}" class="result">
                 <span>${searchForm.title}</span>
                 <span>${dateFormmater.formatDate(searchForm.createDate, '/')}</span>
             </a>`

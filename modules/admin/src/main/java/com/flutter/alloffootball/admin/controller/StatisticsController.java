@@ -1,5 +1,6 @@
 package com.flutter.alloffootball.admin.controller;
 
+import com.flutter.alloffootball.admin.config.security.AdminUserDetails;
 import com.flutter.alloffootball.admin.dto.statistics.RequestDateRange;
 import com.flutter.alloffootball.common.batch.dto.ResponseRegionStatistics;
 import com.flutter.alloffootball.common.batch.service.MatchStatisticsService;
@@ -8,6 +9,7 @@ import com.flutter.alloffootball.common.batch.service.UserStatisticsService;
 import com.flutter.alloffootball.common.dto.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +21,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Controller
-@RequestMapping("/admin")
 @RequiredArgsConstructor
 public class StatisticsController {
 
@@ -28,7 +29,8 @@ public class StatisticsController {
     private final RegionStatisticsService regionStatisticsService;
 
     @GetMapping
-    public String statistics(Model model) {
+    public String statistics(Model model, @AuthenticationPrincipal AdminUserDetails userDetails) {
+        System.out.println("userDetails = " + userDetails);
         model.addAttribute("matchStats", matchStatisticsService.getMatchStatisticsEntity());
         model.addAttribute("userStats", userStatisticsService.getUserStatistics(LocalDate.now()));
         return "admin_main";

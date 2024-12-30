@@ -66,9 +66,9 @@
                         </div>
                     </div>
                 </div>
-                <form th:action="|/admin/notice/${noticeId}|" th:method="DELETE" class="submitBox" id="notice">
+                <form th:action="|/notice/${noticeId}|" th:method="DELETE" class="submitBox" id="notice">
                     <button type="submit" class="subBtn">삭제</button>
-                    <a th:href="|/admin/notice/${noticeId}/edit|" class="mainBtn">수정</a>
+                    <a th:href="|/notice/${noticeId}/edit|" class="mainBtn">수정</a>
                 </form>
             </div>
         </div>
