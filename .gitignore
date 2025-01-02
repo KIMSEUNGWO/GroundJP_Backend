@@ -34,8 +34,8 @@ out/
 /nbdist/
 /.nb-gradle/
 
-application_user.properties
 application.properties
+application_user.properties
 
 **/static/images/
 
