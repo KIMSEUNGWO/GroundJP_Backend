@@ -18,6 +18,4 @@ public class Social {
     @Enumerated(EnumType.STRING)
     private Provider provider;
 
-    @Setter
-    private String refreshToken;
 }

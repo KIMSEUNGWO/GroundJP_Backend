@@ -41,15 +41,15 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public ResponseMatchDetails getMatchDetails(long matchId, CustomUserDetails userDetails) {
+    public ResponseMatchDetails getMatchDetails(long matchId, Long userId) {
         Match match = findByMatchId(matchId);
-        boolean isParticipation = orderRepository.isAlreadyJoin(matchId, userDetails);
+        boolean isParticipation = orderRepository.isAlreadyJoin(matchId, userId);
         RequestMatchStatistics statistics = getStatisticsIfParticipating(match, isParticipation);
         return new ResponseMatchDetails(match, isParticipation, statistics);
     }
 
     @Override
-    public ResponseOrderSimp getOrderSimp(long matchId, CustomUserDetails userDetails) {
+    public ResponseOrderSimp getOrderSimp(long matchId, Long userId) {
         Match match = findByMatchId(matchId);
         return new ResponseOrderSimp(match);
     }

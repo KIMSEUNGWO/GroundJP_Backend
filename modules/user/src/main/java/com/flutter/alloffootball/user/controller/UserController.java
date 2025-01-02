@@ -1,7 +1,8 @@
 package com.flutter.alloffootball.user.controller;
 
-import com.flutter.alloffootball.common.config.security.CustomUserDetails;
 import com.flutter.alloffootball.common.dto.Response;
+import com.flutter.alloffootball.user.config.jwt.UserJwtToken;
+import com.flutter.alloffootball.user.config.jwt.annotataion.JwtToken;
 import com.flutter.alloffootball.user.dto.coupon.ResponseCoupon;
 import com.flutter.alloffootball.user.dto.field.ResponseFavorite;
 import com.flutter.alloffootball.user.dto.match.ResponseMatchView;
@@ -12,7 +13,6 @@ import com.flutter.alloffootball.user.dto.user.ResponseUserProfile;
 import com.flutter.alloffootball.user.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -31,44 +31,44 @@ public class UserController {
     private final FavoriteService favoriteService;
 
     @GetMapping("/profile")
-    public ResponseEntity<Response> profile(@AuthenticationPrincipal CustomUserDetails userDetails) {
-        ResponseUserProfile userProfile = userService.getUserProfile(userDetails.getUser().getId());
+    public ResponseEntity<Response> profile(@JwtToken UserJwtToken userJwtToken) {
+        ResponseUserProfile userProfile = userService.getUserProfile(userJwtToken.getUserId());
         return Response.ok(userProfile);
     }
 
     @PostMapping("/edit")
-    public ResponseEntity<Response> getEdit(@AuthenticationPrincipal CustomUserDetails userDetails, @ModelAttribute RequestEditUser editUser) {
-        userService.editUser(userDetails.getUser().getId(), editUser);
+    public ResponseEntity<Response> getEdit(@ModelAttribute RequestEditUser editUser, @JwtToken UserJwtToken userJwtToken) {
+        userService.editUser(userJwtToken.getUserId(), editUser);
         return Response.ok();
     }
 
 
     @GetMapping("/coupon")
-    public ResponseEntity<Response> coupons(@AuthenticationPrincipal CustomUserDetails userDetails) {
-        List<ResponseCoupon> coupons = couponService.findAllByCouponsOnlyNotUse(userDetails.getUser().getId());
+    public ResponseEntity<Response> coupons(@JwtToken UserJwtToken userJwtToken) {
+        List<ResponseCoupon> coupons = couponService.findAllByCouponsOnlyNotUse(userJwtToken.getUserId());
         return Response.ok(coupons);
     }
 
     @GetMapping("/history")
-    public ResponseEntity<Response> calendar(@ModelAttribute RequestCalendar calendar, @AuthenticationPrincipal CustomUserDetails userDetails) {
-        Map<Integer, List<ResponseMatchView>> histories = orderService.getHistory(calendar.getDate(), userDetails.getUser());
+    public ResponseEntity<Response> calendar(@ModelAttribute RequestCalendar calendar, @JwtToken UserJwtToken userJwtToken) {
+        Map<Integer, List<ResponseMatchView>> histories = orderService.getHistory(calendar.getDate(), userJwtToken.getUserId());
         return Response.ok(histories);
     }
 
     @GetMapping("/matches")
-    public ResponseEntity<Response> matches(@AuthenticationPrincipal CustomUserDetails userDetails) {
-        List<ResponseMatchView> matchSoon = orderService.findAllByUserIdAndMatchDateAfter(userDetails.getUser().getId(), LocalDateTime.now());
+    public ResponseEntity<Response> matches(@JwtToken UserJwtToken userJwtToken) {
+        List<ResponseMatchView> matchSoon = orderService.findAllByUserIdAndMatchDateAfter(userJwtToken.getUserId(), LocalDateTime.now());
         return Response.ok(matchSoon);
     }
 
     @GetMapping("/favorite")
-    public ResponseEntity<Response> favorite(@AuthenticationPrincipal CustomUserDetails userDetails) {
-        List<ResponseFavorite> favorites = fieldService.findAllByFavorite(userDetails.getUser().getId());
+    public ResponseEntity<Response> favorite(@JwtToken UserJwtToken userJwtToken) {
+        List<ResponseFavorite> favorites = fieldService.findAllByFavorite(userJwtToken.getUserId());
         return Response.ok(favorites);
     }
     @PostMapping("/favorite")
-    public ResponseEntity<Response> favoriteToggle(@RequestBody RequestFavoriteToggle favoriteToggle, @AuthenticationPrincipal CustomUserDetails userDetails) {
-        favoriteService.favoriteToggle(userDetails.getUser().getId(), favoriteToggle);
+    public ResponseEntity<Response> favoriteToggle(@RequestBody RequestFavoriteToggle favoriteToggle, @JwtToken UserJwtToken userJwtToken) {
+        favoriteService.favoriteToggle(userJwtToken.getUserId(), favoriteToggle);
         return Response.ok();
     }
 

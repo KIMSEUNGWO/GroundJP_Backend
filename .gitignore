@@ -34,6 +34,7 @@ out/
 /nbdist/
 /.nb-gradle/
 
+application_user.properties
 application.properties
 
 **/static/images/
@@ -41,5 +42,5 @@ application.properties
 ### VS Code ###
 .vscode/
 
-### spa Q 객체 제외 ###
+### jpa Q 객체 제외 ###
 **/src/main/generated/**

@@ -5,5 +5,5 @@ import com.flutter.alloffootball.common.component.ResponseToken;
 import com.flutter.alloffootball.user.dto.login.RegisterRequest;
 
 public interface RegisterService {
-    ResponseToken register(RegisterRequest registerRequest, SocialProfile profile);
+    Long register(RegisterRequest registerRequest, SocialProfile profile);
 }

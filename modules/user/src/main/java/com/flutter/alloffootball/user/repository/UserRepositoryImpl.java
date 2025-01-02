@@ -17,12 +17,6 @@ public class UserRepositoryImpl implements UserRepository {
     private final JpaUserRepository jpaUserRepository;
 
     @Override
-    public User findByRefreshToken(String refreshToken) {
-        return jpaUserRepository.findBySocial_RefreshToken(refreshToken)
-            .orElseThrow(() -> new TokenException(TokenError.TOKEN_EXPIRED));
-    }
-
-    @Override
     public User save(User user) {
         return jpaUserRepository.save(user);
     }

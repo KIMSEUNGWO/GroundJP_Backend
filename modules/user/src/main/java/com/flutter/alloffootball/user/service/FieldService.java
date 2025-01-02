@@ -8,7 +8,7 @@ import com.flutter.alloffootball.user.dto.field.ResponseSearchField;
 import java.util.List;
 
 public interface FieldService {
-    ResponseFieldData getFieldDetails(long fieldId, CustomUserDetails userDetails);
+    ResponseFieldData getFieldDetails(long fieldId, Long userId);
 
     List<ResponseFavorite> findAllByFavorite(Long userId);
 

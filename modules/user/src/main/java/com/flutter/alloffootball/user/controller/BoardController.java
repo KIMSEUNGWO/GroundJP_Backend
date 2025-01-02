@@ -4,6 +4,9 @@ import com.flutter.alloffootball.common.component.WordInspector;
 import com.flutter.alloffootball.common.config.security.CustomUserDetails;
 import com.flutter.alloffootball.common.dto.Response;
 import com.flutter.alloffootball.common.exception.BindingException;
+import com.flutter.alloffootball.user.config.jwt.JwtUserContextHolder;
+import com.flutter.alloffootball.user.config.jwt.UserJwtToken;
+import com.flutter.alloffootball.user.config.jwt.annotataion.JwtToken;
 import com.flutter.alloffootball.user.dto.board.RequestCreateBoard;
 import com.flutter.alloffootball.user.dto.board.RequestDeleteBoard;
 import com.flutter.alloffootball.user.dto.board.RequestEditBoard;
@@ -33,30 +36,29 @@ public class BoardController {
     @PostMapping("/method")
     public ResponseEntity<Response> addBoard(@Validated @RequestBody RequestCreateBoard createBoard,
                                              BindingResult bindingResult,
-                                             @AuthenticationPrincipal CustomUserDetails userDetails) {
+                                             @JwtToken UserJwtToken userJwtToken) {
         System.out.println("createBoard = " + createBoard);
         if (bindingResult.hasErrors()) throw new BindingException(bindingResult);
         wordInspector.inspect(createBoard.getTitle(), createBoard.getContent());
 
-        boardService.createBoard(createBoard, userDetails.getUser().getId());
+        boardService.createBoard(createBoard, userJwtToken.getUserId());
         return Response.ok();
     }
 
     @PatchMapping("/method")
     public ResponseEntity<Response> editBoard(@Validated @RequestBody RequestEditBoard editBoard,
                                              BindingResult bindingResult,
-                                             @AuthenticationPrincipal CustomUserDetails userDetails) {
+                                              @JwtToken UserJwtToken userJwtToken) {
         if (bindingResult.hasErrors()) throw new BindingException(bindingResult);
         wordInspector.inspect(editBoard.getTitle(), editBoard.getContent());
 
-        boardService.editBoard(editBoard, userDetails.getUser().getId());
+        boardService.editBoard(editBoard, userJwtToken.getUserId());
         return Response.ok();
     }
 
     @DeleteMapping("/method")
-    public ResponseEntity<Response> deleteBoard(@Validated @RequestBody RequestDeleteBoard deleteBoard,
-                                             @AuthenticationPrincipal CustomUserDetails userDetails) {
-        boardService.deleteBoard(deleteBoard, userDetails.getUser().getId());
+    public ResponseEntity<Response> deleteBoard(@Validated @RequestBody RequestDeleteBoard deleteBoard, @JwtToken UserJwtToken userJwtToken) {
+        boardService.deleteBoard(deleteBoard, userJwtToken.getUserId());
         return Response.ok();
     }
 

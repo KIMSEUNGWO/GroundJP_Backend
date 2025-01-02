@@ -12,7 +12,7 @@ public interface MatchService {
 
     List<ResponseMatchSimp> findAllByFieldIdToMatchData(long fieldId, Pageable pageable);
 
-    ResponseMatchDetails getMatchDetails(long matchId, CustomUserDetails userDetails);
+    ResponseMatchDetails getMatchDetails(long matchId, Long userId);
 
-    ResponseOrderSimp getOrderSimp(long matchId, CustomUserDetails userDetails);
+    ResponseOrderSimp getOrderSimp(long matchId, Long userId);
 }

@@ -1,6 +1,7 @@
 package com.flutter.alloffootball.user.controller;
 
 import com.flutter.alloffootball.common.dto.Response;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

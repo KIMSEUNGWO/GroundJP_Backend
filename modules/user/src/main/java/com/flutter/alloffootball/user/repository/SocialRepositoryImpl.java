@@ -19,8 +19,4 @@ public class SocialRepositoryImpl implements SocialRepository {
         return jpaUserRepository.findBySocial_SocialIdAndSocial_Provider(socialId, provider);
     }
 
-    @Override
-    public Optional<User> findByRefreshToken(String refreshToken) {
-        return jpaUserRepository.findBySocial_RefreshToken(refreshToken);
-    }
 }

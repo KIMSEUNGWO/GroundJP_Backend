@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public interface OrderRepository {
-    boolean isAlreadyJoin(long matchId, CustomUserDetails userDetails);
+    boolean isAlreadyJoin(long matchId, Long userId);
 
     void valid(Match match, User user, int price);
 

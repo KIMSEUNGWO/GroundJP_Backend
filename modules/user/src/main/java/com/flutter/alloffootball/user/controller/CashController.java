@@ -2,6 +2,9 @@ package com.flutter.alloffootball.user.controller;
 
 import com.flutter.alloffootball.common.config.security.CustomUserDetails;
 import com.flutter.alloffootball.common.dto.Response;
+import com.flutter.alloffootball.user.config.jwt.JwtUserContextHolder;
+import com.flutter.alloffootball.user.config.jwt.UserJwtToken;
+import com.flutter.alloffootball.user.config.jwt.annotataion.JwtToken;
 import com.flutter.alloffootball.user.dto.cash.ResponseReceipt;
 import com.flutter.alloffootball.user.service.CashService;
 import lombok.RequiredArgsConstructor;
@@ -21,14 +24,14 @@ public class CashController {
     private final CashService cashService;
 
     @GetMapping("/receipt")
-    public ResponseEntity<Response> receipt(@AuthenticationPrincipal CustomUserDetails userDetails) {
-        List<ResponseReceipt> receipts = cashService.getReceipts(userDetails.getUser());
+    public ResponseEntity<Response> receipt(@JwtToken UserJwtToken userJwtToken) {
+        List<ResponseReceipt> receipts = cashService.getReceipts(userJwtToken.getUserId());
         return Response.ok(receipts);
     }
 
     @GetMapping("/cash")
-    public ResponseEntity<Response> cash(@AuthenticationPrincipal CustomUserDetails userDetails) {
-        int cash = cashService.getCash(userDetails.getUser());
+    public ResponseEntity<Response> cash(@JwtToken UserJwtToken userJwtToken) {
+        int cash = cashService.getCash(userJwtToken.getUserId());
         return Response.ok(cash);
     }
 

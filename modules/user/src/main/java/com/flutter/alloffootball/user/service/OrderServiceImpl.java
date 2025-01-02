@@ -90,11 +90,11 @@ public class OrderServiceImpl implements OrderService {
 
     @Transactional(readOnly = true)
     @Override
-    public Map<Integer, List<ResponseMatchView>> getHistory(LocalDateTime date, User user) {
+    public Map<Integer, List<ResponseMatchView>> getHistory(LocalDateTime date, Long userId) {
         LocalDateTime startDate = DateRangeUtil.getStartOfMonth(date);
         LocalDateTime endDate = DateRangeUtil.getEndOfMonth(date);
 
-        return orderRepository.getHistory(user.getId(), startDate, endDate)
+        return orderRepository.getHistory(userId, startDate, endDate)
             .stream()
             .map(order -> new ResponseMatchView(order.getMatch()))
             .collect(Collectors.groupingBy(matchView -> matchView.getMatchDate().getDayOfMonth()));

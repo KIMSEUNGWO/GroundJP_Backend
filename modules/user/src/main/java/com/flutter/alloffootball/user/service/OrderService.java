@@ -12,7 +12,7 @@ import java.util.Map;
 public interface OrderService {
     ResponseOrderResult order(RequestOrder requestOrder, long userId, LocalDateTime now);
 
-    Map<Integer, List<ResponseMatchView>> getHistory(LocalDateTime date, User user);
+    Map<Integer, List<ResponseMatchView>> getHistory(LocalDateTime date, Long userId);
 
     List<ResponseMatchView> findAllByUserIdAndMatchDateAfter(Long userId, LocalDateTime now);
 

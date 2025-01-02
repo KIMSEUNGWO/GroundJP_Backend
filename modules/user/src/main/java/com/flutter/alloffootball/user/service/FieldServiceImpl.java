@@ -24,7 +24,7 @@ public class FieldServiceImpl implements FieldService {
     private final JpaFavoriteRepository jpaFavoriteRepository;
 
     @Override
-    public ResponseFieldData getFieldDetails(long fieldId, CustomUserDetails userDetails) {
+    public ResponseFieldData getFieldDetails(long fieldId, Long userId) {
         Field field = fieldRepository.findById(fieldId);
         return new ResponseFieldData(field);
     }

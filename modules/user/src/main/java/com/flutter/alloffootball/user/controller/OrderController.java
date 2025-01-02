@@ -2,6 +2,9 @@ package com.flutter.alloffootball.user.controller;
 
 import com.flutter.alloffootball.common.config.security.CustomUserDetails;
 import com.flutter.alloffootball.common.dto.Response;
+import com.flutter.alloffootball.user.config.jwt.JwtUserContextHolder;
+import com.flutter.alloffootball.user.config.jwt.UserJwtToken;
+import com.flutter.alloffootball.user.config.jwt.annotataion.JwtToken;
 import com.flutter.alloffootball.user.dto.order.RequestCancelOrder;
 import com.flutter.alloffootball.user.dto.order.RequestOrder;
 import com.flutter.alloffootball.user.dto.order.ResponseOrderResult;
@@ -24,9 +27,9 @@ public class OrderController {
     private final MatchService matchService;
 
     @PostMapping
-    public ResponseEntity<Response> order(@RequestBody RequestOrder requestOrder,
-                                          @AuthenticationPrincipal CustomUserDetails userDetails) {
-        ResponseOrderResult orderResult = orderService.order(requestOrder, userDetails.getUser().getId(), LocalDateTime.now());
+    public ResponseEntity<Response> order(@RequestBody RequestOrder requestOrder) {
+        UserJwtToken userJwtToken = JwtUserContextHolder.getUserJwtToken();
+        ResponseOrderResult orderResult = orderService.order(requestOrder, userJwtToken.getUserId(), LocalDateTime.now());
         return Response.ok(orderResult);
     }
 
@@ -34,9 +37,8 @@ public class OrderController {
      * 경기 신청
      */
     @GetMapping("/match/{matchId}")
-    public ResponseEntity<Response> orderGet(@PathVariable("matchId") long matchId,
-                                             @AuthenticationPrincipal CustomUserDetails userDetails) {
-        ResponseOrderSimp matchDetails = matchService.getOrderSimp(matchId, userDetails);
+    public ResponseEntity<Response> orderGet(@PathVariable("matchId") long matchId, @JwtToken UserJwtToken userJwtToken) {
+        ResponseOrderSimp matchDetails = matchService.getOrderSimp(matchId, userJwtToken.getUserId());
         return Response.ok(matchDetails);
     }
 

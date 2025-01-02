@@ -1,8 +1,8 @@
 package com.flutter.alloffootball.user.controller;
 
-import com.flutter.alloffootball.common.component.UserDetailsUtil;
-import com.flutter.alloffootball.common.config.security.CustomUserDetails;
 import com.flutter.alloffootball.common.dto.Response;
+import com.flutter.alloffootball.user.config.jwt.UserJwtToken;
+import com.flutter.alloffootball.user.config.jwt.annotataion.JwtToken;
 import com.flutter.alloffootball.user.dto.field.ResponseFieldData;
 import com.flutter.alloffootball.user.dto.match.ResponseMatchSimp;
 import com.flutter.alloffootball.user.service.FieldService;
@@ -28,15 +28,14 @@ public class FieldController {
 
     private final MatchService matchService;
     private final FieldService fieldService;
-    private final UserDetailsUtil userDetailsUtil;
 
     /**
      * 구장 상세정보 조회 ( 권한 필요없음 )
      */
     @GetMapping("/{fieldId}")
-    public ResponseEntity<Response> fieldDetails(@PathVariable("fieldId") long fieldId, HttpServletRequest request) {
-        CustomUserDetails userDetails = userDetailsUtil.getUserDetails(request);
-        ResponseFieldData fieldData = fieldService.getFieldDetails(fieldId, userDetails);
+    public ResponseEntity<Response> fieldDetails(@PathVariable("fieldId") long fieldId, HttpServletRequest request, @JwtToken UserJwtToken userJwtToken) {
+//        CustomUserDetails userDetails = userDetailsUtil.getUserDetails(request);
+        ResponseFieldData fieldData = fieldService.getFieldDetails(fieldId, userJwtToken.getUserId());
         return Response.ok(fieldData);
     }
 

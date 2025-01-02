@@ -1,9 +1,6 @@
 package com.flutter.alloffootball.user.service;
 
 import com.flutter.alloffootball.user.api.SocialProfile;
-import com.flutter.alloffootball.common.component.JwtUtil;
-import com.flutter.alloffootball.common.component.ResponseToken;
-import com.flutter.alloffootball.common.component.SecurityUtil;
 import com.flutter.alloffootball.common.domain.user.Profile;
 import com.flutter.alloffootball.common.domain.user.Social;
 import com.flutter.alloffootball.common.domain.user.User;
@@ -21,12 +18,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class RegisterServiceImpl implements RegisterService {
 
     private final UserRepository userRepository;
-    private final SecurityUtil securityUtil;
-    private final JwtUtil jwtUtil;
-
 
     @Override
-    public ResponseToken register(RegisterRequest register, SocialProfile profile) {
+    public Long register(RegisterRequest register, SocialProfile profile) {
         Social social = Social.builder()
             .socialId(profile.getUserId())
             .provider(register.getProvider())
@@ -45,9 +39,6 @@ public class RegisterServiceImpl implements RegisterService {
             .role(Role.USER)
             .build();
 
-        userRepository.save(user);
-
-        securityUtil.saveUserInSecurityContext(register.getSocialId(), register.getProvider());
-        return jwtUtil.initToken(user);
+        return userRepository.save(user).getId();
     }
 }

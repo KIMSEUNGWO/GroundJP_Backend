@@ -6,7 +6,7 @@ import com.flutter.alloffootball.user.dto.cash.ResponseReceipt;
 import java.util.List;
 
 public interface CashService {
-    List<ResponseReceipt> getReceipts(User user);
+    List<ResponseReceipt> getReceipts(Long userId);
 
-    int getCash(User user);
+    int getCash(Long userId);
 }

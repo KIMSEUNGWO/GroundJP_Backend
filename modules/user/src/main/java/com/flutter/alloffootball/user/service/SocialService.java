@@ -7,6 +7,4 @@ import java.util.Optional;
 
 public interface SocialService {
     Optional<User> socialLogin(SocialLoginDto loginDto);
-
-    User getUserInfoByUsingRefreshToken(String refreshToken);
 }

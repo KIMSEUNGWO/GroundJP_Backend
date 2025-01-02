@@ -9,5 +9,4 @@ public interface SocialRepository {
 
     Optional<User> findBySocialIdAndProvider(String socialId, Provider provider);
 
-    Optional<User> findByRefreshToken(String refreshToken);
 }

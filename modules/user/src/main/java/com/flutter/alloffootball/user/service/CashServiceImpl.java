@@ -20,15 +20,15 @@ public class CashServiceImpl implements CashService {
 
 
     @Override
-    public List<ResponseReceipt> getReceipts(User user) {
-        return cashRepository.findAllByReceipt(user.getId())
+    public List<ResponseReceipt> getReceipts(Long userId) {
+        return cashRepository.findAllByReceipt(userId)
             .stream()
             .map(ResponseReceipt::new)
             .toList();
     }
 
     @Override
-    public int getCash(User user) {
-        return userRepository.findById(user.getId()).getCash();
+    public int getCash(Long userId) {
+        return userRepository.findById(userId).getCash();
     }
 }

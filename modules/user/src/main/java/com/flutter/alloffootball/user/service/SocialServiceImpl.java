@@ -24,9 +24,4 @@ public class SocialServiceImpl implements SocialService {
             .findBySocialIdAndProvider(loginDto.getSocialId(), loginDto.getProvider());
     }
 
-    @Override
-    public User getUserInfoByUsingRefreshToken(String refreshToken) {
-        return socialRepository.findByRefreshToken(refreshToken)
-            .orElseThrow(() -> new TokenException(TokenError.REFRESH_TOKEN_EXPIRED));
-    }
 }

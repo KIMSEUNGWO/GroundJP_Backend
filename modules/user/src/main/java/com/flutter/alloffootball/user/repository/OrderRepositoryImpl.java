@@ -25,9 +25,9 @@ public class OrderRepositoryImpl implements OrderRepository {
     private final QueryDslOrderRepository queryDslOrderRepository;
 
     @Override
-    public boolean isAlreadyJoin(long matchId, CustomUserDetails userDetails) {
-        if (userDetails == null) return false;
-        return jpaOrderRepository.existsByMatch_IdAndUser_IdAndOrderStatus(matchId, userDetails.getUser().getId(), OrderStatus.USE);
+    public boolean isAlreadyJoin(long matchId, Long userId) {
+        if (userId == null) return false;
+        return jpaOrderRepository.existsByMatch_IdAndUser_IdAndOrderStatus(matchId, userId, OrderStatus.USE);
     }
 
     @Override
